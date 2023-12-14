@@ -61,7 +61,6 @@
                 <ScrollViewer x:Name="scroll_main">
                     <StackPanel x:Name="parrent"/>
                 </ScrollViewer>
-
                 <Frame x:Name="frame_main" NavigationUIVisibility="Hidden" Visibility="Hidden" Opacity="0"/>
             </Grid>
         </Border>
