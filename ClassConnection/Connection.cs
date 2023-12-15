@@ -4,6 +4,7 @@ using System.Data.OleDb;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ClassModule;
 using static ClassConnection.Connection;
@@ -59,8 +60,10 @@ namespace ClassConnection
                             return max_status + 1;
                         }
                         else return 1;
+
+                    default:
+                        return -1;
                 }
-                return -1;
             }
             catch
             {
@@ -109,5 +112,10 @@ namespace ClassConnection
                 Console.WriteLine("NULL");
             }
         }
+
+        public bool ItsNumber(string str) => new Regex(@"((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$").IsMatch(str);
+
+        public bool ItsOnlyFIO(string str) => new Regex(@"[а-яА-Я ]$").IsMatch(str);
+        
     }
 }
