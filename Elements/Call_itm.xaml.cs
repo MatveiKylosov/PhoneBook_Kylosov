@@ -22,7 +22,7 @@ namespace PhoneBook_Kylosov.Elements
     /// </summary>
     public partial class Call_itm : UserControl
     {
-        Call call_loc;
+        public Call call_loc;
         public Call_itm(Call _call)
         {
             InitializeComponent();

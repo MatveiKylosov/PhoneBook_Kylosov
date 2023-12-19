@@ -67,13 +67,14 @@
                         <DatePicker Style="{StaticResource styleDatepicker}" x:Name="period_end" Height="35" VerticalAlignment="Top" FontFamily="Yu Gothic UI Light" FontSize="14" Margin="10,116,10,0"/>
 
                         <Label Content="Категория звонка" Foreground="Black" FontSize="15" FontFamily="Yu Gothic UI Semilight" HorizontalContentAlignment="Left" Height="29" VerticalAlignment="Top" Margin="10,156,0,0"/>
-                        <ComboBox x:Name="call_category_text" FontFamily="Yu Gothic UI Semilight" FontSize="14" Margin="10,194,10,0" Height="30" VerticalAlignment="Top">
+                        <ComboBox x:Name="call_category_text" FontFamily="Yu Gothic UI Semilight" FontSize="14" Margin="10,194,10,0" Height="30" VerticalAlignment="Top" SelectedIndex="0">
+                            <TextBlock>Неважно</TextBlock>
                             <TextBlock>Входящий</TextBlock>
                             <TextBlock>Исходящий</TextBlock>
                         </ComboBox>
 
                         <Label Content="Номер телефона" Foreground="Black" FontSize="15" FontFamily="Yu Gothic UI Semilight" HorizontalContentAlignment="Left" Height="29" VerticalAlignment="Top" Margin="10,230,10,0"/>
-                        <TextBox Style="{StaticResource BaseBox}" x:Name="fio_user" Height="35" 
+                        <TextBox Style="{StaticResource BaseBox}" x:Name="number" Height="35" 
                                  Background="#FFDEDEDE" Margin="10,264,10,0" VerticalAlignment="Top"/>
 
                         <Border x:Name="search_itm" Margin="10,314,117,0" Height="45" CornerRadius="5,5,5,5" Style="{StaticResource Grid_Itm_Anim}" MouseDown="Click_Search" Padding="7,7,7,7" VerticalAlignment="Top">
@@ -86,7 +87,7 @@
                             </Grid>
                         </Border>
 
-                        <Border x:Name="reset_itm" Background="#FFE42B2B" Margin="120,314,7,0" Height="45" CornerRadius="5,5,5,5" Style="{StaticResource Grid_Itm_Anim}" MouseDown="Click_Search" Padding="7,7,7,7" VerticalAlignment="Top">
+                        <Border x:Name="reset_itm" Background="#FFE42B2B" Margin="120,314,7,0" Height="45" CornerRadius="5,5,5,5" Style="{StaticResource Grid_Itm_Anim}" MouseDown="Click_Reset" Padding="7,7,7,7" VerticalAlignment="Top">
                             <Grid Height="30">
                                 <Image Source="/img/reset.png" Margin="2,0,0,0" 
                                HorizontalAlignment="Left" Width="29" Height="30" VerticalAlignment="Center"/>

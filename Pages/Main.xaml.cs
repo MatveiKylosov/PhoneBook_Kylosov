@@ -1,8 +1,11 @@
 ﻿using ClassModule;
+using PhoneBook_Kylosov.Elements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +17,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PhoneBook_Kylosov.Pages
 {
@@ -24,7 +28,7 @@ namespace PhoneBook_Kylosov.Pages
     {
         public enum page_main
         {
-            users, calls, none
+            users, calls, filter ,none
         }
 
         public static page_main page_select;
@@ -170,9 +174,99 @@ namespace PhoneBook_Kylosov.Pages
                 control1.BeginAnimation(ScrollViewer.OpacityProperty, opgridAnimation);
             }
         }
+        
         private void Click_Search(object sender, MouseButtonEventArgs e)
         {
+            page_select = page_main.filter;
+            bool dateF = false;
+            bool type = false;
+            bool numberb = false;
+            DateTime dateStart, dateFinish;
 
+            if ((period_start.SelectedDate != null & period_end.SelectedDate == null) ||
+               (period_start.SelectedDate == null & period_end.SelectedDate != null))
+            {
+                MessageBox.Show("укажите дату корректно");
+                return;
+            }
+            
+            //фильтр на даты
+            if(period_start.SelectedDate != null & period_end.SelectedDate != null)
+            {
+
+                dateStart = (System.DateTime)period_start.SelectedDate;
+                dateFinish = (System.DateTime)period_end.SelectedDate;
+                TimeSpan dateEnd = dateFinish.Subtract(dateStart);
+
+                if (dateEnd.ToString().Contains("-"))
+                {
+                    MessageBox.Show("Дата старта больше даты конца");
+                    return;
+                }
+                dateF = true;
+            }
+
+            //фильтр на категорию звонка
+            if(((TextBlock)call_category_text.SelectedItem).Text != "Неважно")
+                type = true;
+
+            //фильтр на номер телефона
+            if (MainWindow.connect.ItsNumber(number.Text))
+                numberb = true;
+
+
+            if (!(dateF || type || numberb)) return;
+
+            List<UIElement> temp = new List<UIElement>();
+
+            foreach (UIElement child in parrent.Children)
+            {
+                if (child is Call_itm x)
+                {
+                    bool delete = false;
+
+                    if (dateF)
+                    {
+                        DateTime ConvertToDateTime(string dateTimeStr)
+                        {
+                            string[] dateLoc = dateTimeStr.Split(' ');
+                            string[] date = dateLoc[0].Split('.');
+                            return new DateTime(int.Parse(date[2]), int.Parse(date[1]),
+                                                int.Parse(date[0]), int.Parse(dateLoc[1].Split(':')[0]),
+                                                int.Parse(dateLoc[1].Split(':')[1]), 0);
+                        }
+
+                        DateTime xStart = ConvertToDateTime(x.call_loc.time_start.ToString());
+                        DateTime xEnd = ConvertToDateTime(x.call_loc.time_end.ToString());
+
+                        DateTime fStart = ConvertToDateTime(period_start.ToString());
+                        DateTime fEnd = ConvertToDateTime(period_end.ToString());
+
+                        delete = fStart <= xStart && xEnd <= fEnd ? delete : true;
+                    }
+
+                    if (type)
+                        delete = x.call_loc.category_call != (((TextBlock)call_category_text.SelectedItem).Text == "Входящий" ? 2 : 1) ? true : delete;
+
+                    if (numberb)
+                        delete = MainWindow.connect.users.Find(y => y.id == x.call_loc.user_id).phone_num != number.Text ? true : delete;
+
+                    if (!delete) temp.Add(child);
+                }
+            }
+
+            parrent.Children.Clear();
+
+            foreach(UIElement child in temp)
+                parrent.Children.Add(child);
+        }
+
+        private void Click_Reset(object sender, MouseButtonEventArgs e)
+        {
+            period_start.SelectedDate = period_end.SelectedDate =  null;
+            number.Text = "";
+
+            Click_History(null, null);
         }
     }
 }
