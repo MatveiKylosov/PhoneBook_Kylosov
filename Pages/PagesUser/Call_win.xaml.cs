@@ -56,6 +56,7 @@ namespace PhoneBook_Kylosov.Pages.PagesUser
             ComboBoxItem combItm1 = new ComboBoxItem();
             combItm1.Tag = 2;
             combItm1.Content = "Входящий";
+            call_category_text.Items.Add(combItm1);
             if (_call.category_call == 2) combItm1.IsSelected = true;
 
             MainWindow.connect.LoadData(ClassConnection.Connection.tabels.users);

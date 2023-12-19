@@ -20,7 +20,7 @@ namespace PhoneBook_Kylosov.Elements
     /// <summary>
     /// Логика взаимодействия для Call_itm.xaml
     /// </summary>
-    public partial class Call_itm : Page
+    public partial class Call_itm : UserControl
     {
         Call call_loc;
         public Call_itm(Call _call)

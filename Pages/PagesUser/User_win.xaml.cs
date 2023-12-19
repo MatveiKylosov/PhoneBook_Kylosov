@@ -39,10 +39,11 @@ namespace PhoneBook_Kylosov.Pages.PagesUser
         bool SaveUser(int id = -1)
         {
             string query = id == -1 ?
-                $"UPDATE [users] SET [phone_num] = '{phone_user.Text}', [FIO_user] = '{fio_user.Text}', [passport_data] = '{addrec_user.Text}' WHERE [Код] = {user_loc.id}" :
-                $"INSERT INTO [users]([Код], [phone_num], [FIO_user], [passport_data]) VALUES ({id.ToString()}, '{phone_user.Text}', '{fio_user.Text}', '{addrec_user.Text}')";
+                $"UPDATE [users] SET [phone_num] = '{phone_user.Text}', [FIO_user] = '{fio_user.Text}', [pasport_data] = '{addrec_user.Text}' WHERE [Код] = {user_loc.id}" :
+                $"INSERT INTO [users]([Код], [phone_num], [FIO_user], [pasport_data]) VALUES ({id.ToString()}, '{phone_user.Text}', '{fio_user.Text}', '{addrec_user.Text}')";
 
             var pc = MainWindow.connect.QueryAccess(query);
+            MessageBox.Show(ClassConnection.Connection.err);
             if (pc == null) return false;
 
             MainWindow.connect.LoadData(ClassConnection.Connection.tabels.users);
@@ -72,7 +73,6 @@ namespace PhoneBook_Kylosov.Pages.PagesUser
             if (user_loc.fio_user == null)
             {
                 user = SaveUser(MainWindow.connect.SetLastId(ClassConnection.Connection.tabels.users));
-
                 MessageBox.Show($"Запрос на добавление клиента {(user ? "" : "не")} был обработан", 
                                 user ? "Успешно" : "Ошибка",
                                 MessageBoxButton.OK,
@@ -81,7 +81,6 @@ namespace PhoneBook_Kylosov.Pages.PagesUser
             else
             {
                 user = SaveUser();
-
                 MessageBox.Show($"Запрос на изменение клиента {(user ? "" : "не")} был обработан",
                                 user ? "Успешно" : "Ошибка",
                                 MessageBoxButton.OK,

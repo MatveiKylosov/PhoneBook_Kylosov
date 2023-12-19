@@ -13,6 +13,7 @@ namespace ClassConnection
 {
     public class Connection
     {
+        public static string err = "Dont have error";
         public List<User> users = new List<User>();
         public List<Call> calls = new List<Call>();
 
@@ -21,7 +22,7 @@ namespace ClassConnection
         public string localPath = "";
 
         public OleDbDataReader QueryAccess(string query)
-        {
+        {   
             try
             {
                 localPath = Directory.GetCurrentDirectory();
@@ -31,8 +32,9 @@ namespace ClassConnection
                 OleDbDataReader reader = cmd.ExecuteReader();
                 return reader;
             }
-            catch
+            catch (Exception ex)
             {
+                err = (ex.Message.ToString());
                 return null;
             }
         }
@@ -76,6 +78,7 @@ namespace ClassConnection
             try
             {
                 OleDbDataReader itemQuery = QueryAccess("SELECT * FROM [" + zap.ToString() + "] ORDER BY [Код]");
+
                 if (zap.ToString() == "users")
                 {
                     users.Clear();
