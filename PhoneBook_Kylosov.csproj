@@ -183,7 +183,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="img\search.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="img\back.png" />
     <Resource Include="img\calendar.png" />
@@ -210,6 +212,9 @@
       <Project>{f3090a8f-07b1-44f5-8a27-fc565ff324b2}</Project>
       <Name>ClassModule</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\reset.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

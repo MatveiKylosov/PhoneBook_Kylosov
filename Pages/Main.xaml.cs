@@ -38,6 +38,8 @@ namespace PhoneBook_Kylosov.Pages
 
         private void Click_Phone(object sender, RoutedEventArgs e)
         {
+            Search.Visibility = Visibility.Hidden;
+            scroll_main.Margin = new Thickness(0, 0, 0, 0);
             if (frame_main.Visibility == Visibility.Visible) 
                 MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main);
 
@@ -82,7 +84,10 @@ namespace PhoneBook_Kylosov.Pages
         }
 
         private void Click_History(object sender, RoutedEventArgs e)
-        {
+        {            //Margin="240,0,0,0
+            Search.Visibility= Visibility.Visible;
+            scroll_main.Margin = new Thickness(240, 0, 0, 0);
+
             if (frame_main.Visibility == Visibility.Visible) 
                 MainWindow.main.Anim_move(MainWindow.main.frame_main, MainWindow.main.scroll_main);
 
@@ -164,6 +169,10 @@ namespace PhoneBook_Kylosov.Pages
                 };
                 control1.BeginAnimation(ScrollViewer.OpacityProperty, opgridAnimation);
             }
+        }
+        private void Click_Search(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
